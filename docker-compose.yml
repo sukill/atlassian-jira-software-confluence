@@ -1,0 +1,50 @@
+version: "3.2"
+
+services:
+  db:
+    image: postgres:9.3
+    volumes:
+      - postgres_data:/var/lib/postgresql
+      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
+    healthcheck:
+      test: "pg_isready -h localhost -p 5432 -q -U postgres"
+      interval: 3s
+      timeout: 1s
+      retries: 10
+
+  confluence:
+    image: sukill/confluence
+    volumes:
+        - confluence_data:/var/atlassian/application-data/confluence
+    ports:
+      - "8090-8091:8090-8091"
+    depends_on:
+      - db
+    links:
+      - db
+      - jira
+
+  jira:
+    image: sukill/jira-software
+    volumes:
+      - jira_data:/var/atlassian/jira 
+    ports:
+      - '80:8080'
+    environment:      
+      - 'CATALINA_CONNECTOR_PROXYNAME='
+      - 'CATALINA_CONNECTOR_PROXYPORT=8080'
+    depends_on:
+      - db
+    links:
+      - db
+
+volumes:
+  postgres_data:
+  confluence_data:
+  jira_data:
+
+
