@@ -82,6 +82,7 @@ volumes:
   confluence_opt:
   jira_home:
   jira_opt:
+  nginx_conf:
 
 networks:
   atlassian:
