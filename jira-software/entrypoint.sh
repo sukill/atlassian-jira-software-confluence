@@ -9,7 +9,7 @@ set -euo pipefail
 : ${CATALINA_CONTEXT_PATH:=}
 : ${CATALINA_CERT_LOCATION:=}
 : ${CATALINA_KEYSTORE_PASS:=}
-
+: ${CATALINA_KEY_ALIAS:=letsencrypt}
 : ${CATALINA_OPTS:=}
 
 CATALINA_OPTS="${CATALINA_OPTS} -DcatalinaConnectorProxyName=${CATALINA_CONNECTOR_PROXYNAME}"
@@ -22,6 +22,7 @@ CATALINA_OPTS="${CATALINA_OPTS} -DcatalinaKeystorePass=${CATALINA_KEYSTORE_PASS}
 
 export CATALINA_OPTS
 
+keytool -importcert -keystore ${JAVA_HOME}/jre/lib/security/cacerts -storepass ${CATALINA_KEYSTORE_PASS} -file ${CATALINA_CERT_LOCATION} -alias ${CATALINA_KEY_ALIAS}
 
 # Start Confluence as the correct user
 if [ "${UID}" -eq 0 ]; then

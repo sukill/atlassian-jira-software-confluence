@@ -51,6 +51,7 @@ services:
       - 'CATALINA_CONTEXT_PATH=/confluence'
       - 'CATALINA_CERT_LOCATION=/etc/cert/[PKCS12_KEY_FILE]'
       - 'CATALINA_KEYSTORE_PASS=[YOUR_KEYSTORE_PASS]'
+      - 'CATALINA_KEY_ALIAS=letsencrypt'
     depends_on:
       - db
     networks:
@@ -70,6 +71,9 @@ services:
       - 'CATALINA_CONNECTOR_SCHEME=https'
       - 'CATALINA_CONNECTOR_SECURE=true'
       - 'CATALINA_CONTEXT_PATH=/jira'
+      - 'CATALINA_CERT_LOCATION=/etc/cert/[PKCS12_KEY_FILE]'
+      - 'CATALINA_KEYSTORE_PASS=[YOUR_KEYSTORE_PASS]'
+      - 'CATALINA_KEY_ALIAS=letsencrypt'
 
    depends_on:
      - db
