@@ -31,7 +31,7 @@ RUN set -x \
 RUN mkdir -p /opt/java \
     && chmod -R 700			${JAVA_HOME} \
     && chown -R daemon:daemon	${JAVA_HOME} \
-    && wget --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-x64.tar.gz \
+    && wget --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.tar.gz \
     && tar --directory "${JAVA_HOME}" --strip-components=1 --no-same-owner -zxvf *-linux-x64.tar.gz \
     && rm *-linux-x64.tar.gz
 # glibc installation for alpine linux
