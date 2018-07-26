@@ -11,7 +11,7 @@ services:
       - '80:80'
       - '443:443'
     environment:
-      - NGINX_HOST=[YOUR_DOMAIN]
+      - NGINX_HOST=[HOST NAME]
       - NGINX_PORT=80
     links:
       - confluence
@@ -22,10 +22,10 @@ services:
     image: postgres:9.3
     volumes:
       - postgres_data:/var/lib/postgresql
-      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+      - ./postgresql/initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
     environment: 
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=[YOUR_SECRET_PASSWORD]
+      - POSTGRES_PASSWORD=[YOUR PASSWORD]
       - POSTGRES_INITDB_ARGS=--encoding=UTF-8
     healthcheck:
       test: "pg_isready -h localhost -p 5432 -q -U postgres"
@@ -44,13 +44,13 @@ services:
     ports:
       - "8090-8091:8090-8091"
     environment:
-      - 'CATALINA_CONNECTOR_PROXYNAME=[YOUR_PROXY_NAME]'
+      - 'CATALINA_CONNECTOR_PROXYNAME=[HOST NAME]'
       - 'CATALINA_CONNECTOR_PROXYPORT=443'
       - 'CATALINA_CONNECTOR_SCHEME=https'
       - 'CATALINA_CONNECTOR_SECURE=true'
       - 'CATALINA_CONTEXT_PATH=/confluence'
-      - 'CATALINA_CERT_LOCATION=/etc/cert/[PKCS12_KEY_FILE]'
-      - 'CATALINA_KEYSTORE_PASS=[YOUR_KEYSTORE_PASS]'
+      - 'CATALINA_CERT_LOCATION=/etc/cert/[PUBLIC KEY.PEM]'
+      - 'CATALINA_KEYSTORE_PASS=[YOUR PASSWORD]'
       - 'CATALINA_KEY_ALIAS=letsencrypt'
     depends_on:
       - db
@@ -66,13 +66,13 @@ services:
    ports:
      - '8080:8080'
    environment:      
-      - 'CATALINA_CONNECTOR_PROXYNAME=[YOUR_PROXY_NAME]'
+      - 'CATALINA_CONNECTOR_PROXYNAME=[HOST NAME]'
       - 'CATALINA_CONNECTOR_PROXYPORT=443'
       - 'CATALINA_CONNECTOR_SCHEME=https'
       - 'CATALINA_CONNECTOR_SECURE=true'
       - 'CATALINA_CONTEXT_PATH=/jira'
-      - 'CATALINA_CERT_LOCATION=/etc/cert/[PKCS12_KEY_FILE]'
-      - 'CATALINA_KEYSTORE_PASS=[YOUR_KEYSTORE_PASS]'
+      - 'CATALINA_CERT_LOCATION=/etc/cert/[PUBLIC KEY.PEM]'
+      - 'CATALINA_KEYSTORE_PASS=[YOUR PASSWORD]'
       - 'CATALINA_KEY_ALIAS=letsencrypt'
 
    depends_on:

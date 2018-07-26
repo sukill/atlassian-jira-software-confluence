@@ -22,7 +22,8 @@ CATALINA_OPTS="${CATALINA_OPTS} -DcatalinaKeystorePass=${CATALINA_KEYSTORE_PASS}
 
 export CATALINA_OPTS
 
-keytool -importcert -keystore ${JAVA_HOME}/jre/lib/security/cacerts -storepass ${CATALINA_KEYSTORE_PASS} -file ${CATALINA_CERT_LOCATION} -alias ${CATALINA_KEY_ALIAS}
+#keytool -importcert -keystore ${JAVA_HOME}/jre/lib/security/cacerts -storepass ${CATALINA_KEYSTORE_PASS} -file ${CATALINA_CERT_LOCATION} -alias ${CATALINA_KEY_ALIAS}
+keytool -import -trustcacerts -alias letsencrypt -file ${CATALINA_CERT_LOCATION} -keypass ${CATALINA_KEYSTORE_PASS} -keystore ${JAVA_HOME}/jre/lib/security/cacerts -storepass changeit -noprompt
 
 
 # Start Confluence as the correct user
